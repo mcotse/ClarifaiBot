@@ -8,7 +8,7 @@ const FB_TOKEN = 'CAALZCGZCD9zn4BADWjDmDFZBMHXnyeZADYjcvZC9qlxd0WlIZA8qnUbyTkUsu
 const FB_VERIFY = 'verification_string123'
 const ACR_ACCESS_KEY = '0c3fd7342e0c1be74392a28ad38037d3'
 const ACR_ACCESS_SECRET = 'Q1lH4qZXZ8QS3A42MHXWzoCDtNXLrc240q8OBxC4'
-const ACR_HOST = 'eu-west-1.api.acrcloud.com'
+const ACR_HOST = 'ap-southeast-1.api.acrcloud.com'
 
 let bot = new Bot({
   token: FB_TOKEN,
