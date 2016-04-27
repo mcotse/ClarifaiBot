@@ -27,58 +27,57 @@ bot.on('message', (payload, reply) => {
     })
   }
 
-  reply({ text: 'Identifying song... this might take a few seconds.' })
+  reply({ text: 'Identifying message... this might take a few seconds.' })
   recognizeSong({
     message: payload.message,
-    key: ACR_ACCESS_KEY,
-    secret: ACR_ACCESS_SECRET,
-    host: ACR_HOST
+    // key: ACR_ACCESS_KEY,
+    // secret: ACR_ACCESS_SECRET,
+    // host: ACR_HOST
   }, (err, song) => {
-    if (err && err.message === 'NO_MATCH') {
+    if (err) {
       return reply({
-        text: 'I couldn\'t identify this song.'
+        text: 'I couldn\'t identify the text with watson.'
       })
     }
     if (err) throw err
+    // let element = {
+    //   title: song.title,
+    //   subtitle: song.artist,
+    //   image_url: song.album_art || null,
+    //   buttons: []
+    // }
+    //
+    // if (song.spotify) {
+    //   element.buttons.push({
+    //     type: 'web_url',
+    //     title: 'Listen on Spotify',
+    //     url: song.spotify
+    //   })
+    // } else {
+    //   element.buttons.push({
+    //     type: 'web_url',
+    //     title: 'Search for song',
+    //     url: `https://google.com/search?q=${song.artist} ${song.title}`
+    //   })
+    // }
+    //
+    // if (song.youtube) {
+    //   element.buttons.push({
+    //     type: 'web_url',
+    //     title: 'Watch music video',
+    //     url: song.youtube
+    //   })
+    // }
 
-    let element = {
-      title: song.title,
-      subtitle: song.artist,
-      image_url: song.album_art || null,
-      buttons: []
-    }
-
-    if (song.spotify) {
-      element.buttons.push({
-        type: 'web_url',
-        title: 'Listen on Spotify',
-        url: song.spotify
-      })
-    } else {
-      element.buttons.push({
-        type: 'web_url',
-        title: 'Search for song',
-        url: `https://google.com/search?q=${song.artist} ${song.title}`
-      })
-    }
-
-    if (song.youtube) {
-      element.buttons.push({
-        type: 'web_url',
-        title: 'Watch music video',
-        url: song.youtube
-      })
-    }
-
-    reply({
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'generic',
-          elements: [element]
-        }
-      }
-    })
+    // reply({
+    //   attachment: {
+    //     type: 'template',
+    //     payload: {
+    //       template_type: 'generic',
+    //       elements: [element]
+    //     }
+    //   }
+    // })
   })
 })
 
