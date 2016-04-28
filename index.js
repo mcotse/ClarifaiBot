@@ -1,7 +1,7 @@
 'use strict'
 const http = require('http')
 const Bot = require('messenger-bot')
-const recognizeSong = require('./recognize')
+var recognizeSong = require('./recognize')
 
 // Edit these with your tokens
 const FB_TOKEN = 'CAALZCGZCD9zn4BADWjDmDFZBMHXnyeZADYjcvZC9qlxd0WlIZA8qnUbyTkUsuyZCZAwYpr2de7VUfuGBezjqlBCPnj413xUSdogH5gspqKG2hpomxhIKfVheoRaw58ZBPaXwfpCYq5LzsyJTDx4nBo4j91WwWtnVVR0vUmZBOl4KFaedlVOXJYiSS9gfVdMJ3rxGjuP5ZAEpd7CfQZDZD'
