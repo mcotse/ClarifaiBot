@@ -4,7 +4,7 @@ const request = require('request')
 const config = require('./config')
 var Clarifai = require('clarifai')
 
-client = new Clarifai({
+var client = new Clarifai({
   id: config.id,
   secret: config.secret
 })
@@ -15,6 +15,12 @@ module.exports = function recognizeImage (opts, cb) {
   let attachment = opts.message.attachments[0]
   console.log('attachment: ', attachment)
 
+  let { url } = attachment.payload
+  console.log(url)
+
+  client.tagFromUrls('image', url, function(err, results) {
+    console.log(results)
+  })
   // request({
   //   uri: attachment.payload.url,
   //   method: 'GET',
@@ -77,5 +83,5 @@ module.exports = function recognizeImage (opts, cb) {
     //     })
     //   }
     // })
-  })
+  // })
 }
