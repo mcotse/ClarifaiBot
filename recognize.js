@@ -21,14 +21,25 @@ module.exports = function recognizeImage (opts, cb) {
   console.log(url)
 
   imgur.uploadUrl(url)
-  .then(function (json) {
+  .then(json => {
       let { link } = json.data
       console.log(link);
-      client.tagFromUrls('image', link, function(err, results) {
-        console.log(results)
-      })
+      client.tagFromUrls('image', link, ((err, results) => {
+        if (results){
+          console.log(results)
+          let {tags} = results
+          let {tags:[{ class: id }]} = results
+          return cb(null,{
+            'imgur_url': link,
+            'id': id
+          })
+        }
+        if (err){
+          console.log(err)
+        }
+      }))
   })
-  .catch(function (err) {
+  .catch(err => {
       console.error(err.message);
   });
 

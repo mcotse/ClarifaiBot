@@ -38,13 +38,13 @@ bot.on('message', (payload, reply) => {
     if (err) throw err
 
     let element = {
-      title: 'sampletitle',
-      subtitle: 'subtitle',
-      image_url: null || null,
+      title: 'Identify',
+      subtitle: song.id,
+      image_url: song.imgur_url || null,
       buttons: [{
         type: 'web_url',
-        title: 'link',
-        url: 'https://google.com/search?q=placeholder'
+        title: 'imgur link',
+        url: song.imgur_url
       }]
     }
 

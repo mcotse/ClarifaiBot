@@ -1,25 +1,21 @@
-var watson = require('watson-developer-cloud');
-var fs = require('fs');
+var result = { docId: 2462713203533080600,
+  docIdStr: '2e472ba2b38aa63f222d509c5040e7d5',
+  tags:
+   [ { class: 'no person',
+       conceptId: 'ai_786Zr311',
+       probability: 0.9946880340576172 },
+     { class: 'cream',
+       conceptId: 'ai_qNxqNBWN',
+       probability: 0.990070104598999 },
+      ] }
 
-var speech_to_text = watson.speech_to_text({
-  username: '2cafffa7-4a4e-46c7-8992-f66100dbb758',
-  password: 'f4dAYSvHcAvG',
-  version: 'v1'
-});
+for (let {tags:[{ class: id }]} = result
+// let [o1] = tags
 
-var params = {
-  // From file
-  audio: fs.createReadStream('./audioclip-1461810758000-4893.mp4'),
-  content_type: 'audio/mp4'
-};
-console.log(params.audio)
+// console.log(tags)
+// console.log(o1)
+console.log(id)
 
-speech_to_text.recognize(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else
-    if(res && res.results && res.results.length>0 && res.results[0].alternatives && res.results[0].alternatives.length>0){
-      var result = res.results[0].alternatives[0].transcript;
-      console.log("result: ",result);
-    }
-});
+for (var {name: n, family: { father: f } } of people) {
+  console.log("Name: " + n + ", Father: " + f);
+}
