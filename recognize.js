@@ -11,34 +11,28 @@ client = new Clarifai({
 
 
 
-
-var params = {
-  content_type: 'audio/ogg;codecs=opus',
-  continuous: true,
-  interim_results: false
-};
-
-module.exports = function recognizeSong (opts, cb) {
+module.exports = function recognizeImage (opts, cb) {
   let attachment = opts.message.attachments[0]
   console.log('attachment: ', attachment)
-  request({
-    uri: attachment.payload.url,
-    method: 'GET',
-    encoding: null
-  }, (err, res, data) => {
-    if (err) return cb(err)
 
-    console.log('data: ', data)
-
-    var recognizeStream = speech_to_text.createRecognizeStream(params);
-    recognizeStream.setEncoding('utf8');
-    recognizeStream.on('results', (data) => {
-      console.log('hi')
-      if(data && data.results && data.results.length>0 && data.results[0].alternatives && data.results[0].alternatives.length>0){
-        var result = data.results[0].alternatives[0].transcript;
-        console.log("result: ",result);
-      }
-    })
+  // request({
+  //   uri: attachment.payload.url,
+  //   method: 'GET',
+  //   encoding: null
+  // }, (err, res, data) => {
+  //   if (err) return cb(err)
+  //
+  //   console.log('data: ', data)
+  //
+  //   var recognizeStream = speech_to_text.createRecognizeStream(params);
+  //   recognizeStream.setEncoding('utf8');
+  //   recognizeStream.on('results', (data) => {
+  //     console.log('hi')
+  //     if(data && data.results && data.results.length>0 && data.results[0].alternatives && data.results[0].alternatives.length>0){
+  //       var result = data.results[0].alternatives[0].transcript;
+  //       console.log("result: ",result);
+  //     }
+  //   })
     // request({
     //   uri: `http://${opts.host}/v1/identify`,
     //   method: 'POST',

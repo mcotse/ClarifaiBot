@@ -1,7 +1,7 @@
 'use strict'
 const http = require('http')
 const Bot = require('messenger-bot')
-var recognizeSong = require('./recognize')
+var recognizeImage = require('./recognize')
 
 // Edit these with your tokens
 const FB_TOKEN = 'CAALZCGZCD9zn4BADWjDmDFZBMHXnyeZADYjcvZC9qlxd0WlIZA8qnUbyTkUsuyZCZAwYpr2de7VUfuGBezjqlBCPnj413xUSdogH5gspqKG2hpomxhIKfVheoRaw58ZBPaXwfpCYq5LzsyJTDx4nBo4j91WwWtnVVR0vUmZBOl4KFaedlVOXJYiSS9gfVdMJ3rxGjuP5ZAEpd7CfQZDZD'
@@ -21,32 +21,34 @@ bot.on('error', (err) => {
 
 bot.on('message', (payload, reply) => {
   console.log('Received message from ' + payload.sender.id)
-  if (!payload.message.attachments || !payload.message.attachments[0] || payload.message.attachments[0].type !== 'audio') {
+  if (!payload.message.attachments || !payload.message.attachments[0] || payload.message.attachments[0].type !== 'image') {
     return reply({
-      text: 'That\'s not an audio message. Send me an audio message by pressing the mic button at the bottom of the app.'
+      text: 'That\'s not an iamge. Send me an image!.'
     })
   }
 
-  reply({ text: 'Identifying message... this might take a few seconds.' })
-  recognizeSong({
-    message: payload.message,
-    // key: ACR_ACCESS_KEY,
-    // secret: ACR_ACCESS_SECRET,
-    // host: ACR_HOST
+  reply({ text: 'Analyzing image... this might take a few seconds.' })
+  recognizeImage({
+    message: payload.message
   }, (err, song) => {
     if (err) {
       return reply({
-        text: 'I couldn\'t identify the text with watson.'
+        text: 'I couldn\'t identify the image with Clarifai.'
       })
     }
     if (err) throw err
-    // let element = {
-    //   title: song.title,
-    //   subtitle: song.artist,
-    //   image_url: song.album_art || null,
-    //   buttons: []
-    // }
-    //
+
+    let element = {
+      title: 'sampletitle',
+      subtitle: 'subtitle',
+      image_url: null || null,
+      buttons: [{
+        type: 'web_url',
+        title: 'link',
+        url: 'https://google.com/search?q=placeholder'
+      }]
+    }
+
     // if (song.spotify) {
     //   element.buttons.push({
     //     type: 'web_url',
@@ -69,15 +71,15 @@ bot.on('message', (payload, reply) => {
     //   })
     // }
 
-    // reply({
-    //   attachment: {
-    //     type: 'template',
-    //     payload: {
-    //       template_type: 'generic',
-    //       elements: [element]
-    //     }
-    //   }
-    // })
+    reply({
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'generic',
+          elements: [element]
+        }
+      }
+    })
   })
 })
 
