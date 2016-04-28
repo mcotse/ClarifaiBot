@@ -13,5 +13,8 @@
     "imgur": "^0.1.7",
     "messenger-bot": "^2.1.0",
     "request": "^2.72.0",
+  },
+  "engines": {
+    "node": "6.0.0"
   }
 }
