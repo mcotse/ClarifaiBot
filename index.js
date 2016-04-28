@@ -4,13 +4,10 @@ const Bot = require('messenger-bot')
 var recognizeImage = require('./recognize')
 
 //activate webhook
-// curl -X POST "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=CAAWgJ8SZC4ycBAPETX5xpqw1DgbCni1BUYlTllHyfzTxIr8Vp3MTnfE66IN73Rq794B3BTfbp3voL3T7fsEa7lAKmmA9davEQv9sVxZBfZBm5XvaRsEZA8qlV9hhZAgsnjgnjQfk6U9oFsJL7gTikSZBGdXczobMMhY3gacn89p3MXkHbEdZCnJDyjem0S7qPo6OM1CI4ERBQZDZD"
+// curl -X POST "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=CAALZCGZCD9zn4BACBDgLoE7NVYboCMqpQf6o9a3ZCPDOZCI7RZBZB0vePZCuaESzGG2lFAZAqrITi2qXZAY2nBf6giMu9WjbPskFINXHVk3uKzyXHYkSD0UlOtAJthZAG6kJaXha0221zi3hZAmNwt9SVvoCIYikJiqcQZCqGtGjW3glpgS0l8WDHxFQfGHRwsPPoOAD6iHhlWxQKQZDZD"
 // Edit these with your tokens
-const FB_TOKEN = 'CAALZCGZCD9zn4BADWjDmDFZBMHXnyeZADYjcvZC9qlxd0WlIZA8qnUbyTkUsuyZCZAwYpr2de7VUfuGBezjqlBCPnj413xUSdogH5gspqKG2hpomxhIKfVheoRaw58ZBPaXwfpCYq5LzsyJTDx4nBo4j91WwWtnVVR0vUmZBOl4KFaedlVOXJYiSS9gfVdMJ3rxGjuP5ZAEpd7CfQZDZD'
+const FB_TOKEN = 'CAALZCGZCD9zn4BACBDgLoE7NVYboCMqpQf6o9a3ZCPDOZCI7RZBZB0vePZCuaESzGG2lFAZAqrITi2qXZAY2nBf6giMu9WjbPskFINXHVk3uKzyXHYkSD0UlOtAJthZAG6kJaXha0221zi3hZAmNwt9SVvoCIYikJiqcQZCqGtGjW3glpgS0l8WDHxFQfGHRwsPPoOAD6iHhlWxQKQZDZD'
 const FB_VERIFY = 'Verify123'
-const ACR_ACCESS_KEY = '0c3fd7342e0c1be74392a28ad38037d3'
-const ACR_ACCESS_SECRET = 'Q1lH4qZXZ8QS3A42MHXWzoCDtNXLrc240q8OBxC4'
-const ACR_HOST = 'ap-southeast-1.api.acrcloud.com'
 
 let bot = new Bot({
   token: FB_TOKEN,

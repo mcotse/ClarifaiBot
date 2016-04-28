@@ -3,12 +3,14 @@ const crypto = require('crypto')
 const request = require('request')
 const config = require('./config')
 var Clarifai = require('clarifai')
+var imgur = require('imgur');
 
 var client = new Clarifai({
   id: config.id,
   secret: config.secret
 })
 
+imgur.setCredentials(config.user, config.pw, 'c43cafb08a680b5');
 
 
 module.exports = function recognizeImage (opts, cb) {
@@ -18,9 +20,21 @@ module.exports = function recognizeImage (opts, cb) {
   let { url } = attachment.payload
   console.log(url)
 
-  client.tagFromUrls('image', url, function(err, results) {
-    console.log(results)
+  imgur.uploadUrl(url)
+  .then(function (json) {
+      let { link } = json.data
+      console.log(link);
+      client.tagFromUrls('image', link, function(err, results) {
+        console.log(results)
+      })
   })
+  .catch(function (err) {
+      console.error(err.message);
+  });
+
+  // client.tagFromUrls('image', url, function(err, results) {
+  //   console.log(results)
+  // })
   // request({
   //   uri: attachment.payload.url,
   //   method: 'GET',
