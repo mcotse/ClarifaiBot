@@ -9,18 +9,17 @@ var speech_to_text = watson.speech_to_text({
 
 var params = {
   // From file
-  audio: fs.createReadStream('./0001.flac'),
-  content_type: 'audio/flac'
+  audio: fs.createReadStream('./audioclip-1461810758000-4893.mp4'),
+  content_type: 'audio/mp4'
 };
+console.log(params.audio)
 
 speech_to_text.recognize(params, function(err, res) {
   if (err)
     console.log(err);
   else
-    console.log(JSON.stringify(res, null, 2));
+    if(res && res.results && res.results.length>0 && res.results[0].alternatives && res.results[0].alternatives.length>0){
+      var result = res.results[0].alternatives[0].transcript;
+      console.log("result: ",result);
+    }
 });
-
-// or streaming
-fs.createReadStream('./0001.flac')
-  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/flac;'}))
-  .pipe(fs.createWriteStream('./transcription.txt'));

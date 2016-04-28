@@ -2,14 +2,15 @@
 const crypto = require('crypto')
 const request = require('request')
 const config = require('./config')
-var watson = require('watson-developer-cloud')
+var Clarifai = require('clarifai')
 
-var speech_to_text = watson.speech_to_text({
-  username: config.username,
-  password: config.password,
-  version: 'v1',
-  url: 'https://stream.watsonplatform.net/speech-to-text/api'
-});
+client = new Clarifai({
+  id: config.id,
+  secret: config.secret
+})
+
+
+
 
 var params = {
   content_type: 'audio/ogg;codecs=opus',
