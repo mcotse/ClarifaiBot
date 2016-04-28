@@ -19,20 +19,20 @@ var params = {
 
 module.exports = function recognizeSong (opts, cb) {
   let attachment = opts.message.attachments[0]
-
+  console.log('attachment: ', attachment)
   request({
     uri: attachment.payload.url,
     method: 'GET',
     encoding: null
-  }, (err, res, audio) => {
+  }, (err, res, data) => {
     if (err) return cb(err)
 
-    // let timestamp = Date.now()
-    // let signingString = `POST\n/v1/identify\n${opts.key}\naudio\n1\n${timestamp}`
-    // let signature = crypto.createHmac('sha1', opts.secret).update(new Buffer(signingString, 'utf-8')).digest('base64')
+    console.log('data: ', data)
+
     var recognizeStream = speech_to_text.createRecognizeStream(params);
     recognizeStream.setEncoding('utf8');
     recognizeStream.on('results', (data) => {
+      console.log('hi')
       if(data && data.results && data.results.length>0 && data.results[0].alternatives && data.results[0].alternatives.length>0){
         var result = data.results[0].alternatives[0].transcript;
         console.log("result: ",result);
