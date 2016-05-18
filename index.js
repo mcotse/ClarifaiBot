@@ -48,28 +48,6 @@ bot.on('message', (payload, reply) => {
       }]
     }
 
-    // if (song.spotify) {
-    //   element.buttons.push({
-    //     type: 'web_url',
-    //     title: 'Listen on Spotify',
-    //     url: song.spotify
-    //   })
-    // } else {
-    //   element.buttons.push({
-    //     type: 'web_url',
-    //     title: 'Search for song',
-    //     url: `https://google.com/search?q=${song.artist} ${song.title}`
-    //   })
-    // }
-    //
-    // if (song.youtube) {
-    //   element.buttons.push({
-    //     type: 'web_url',
-    //     title: 'Watch music video',
-    //     url: song.youtube
-    //   })
-    // }
-
     reply({
       attachment: {
         type: 'template',
