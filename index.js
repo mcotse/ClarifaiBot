@@ -78,7 +78,6 @@ bot.on('postback',(fullpayload,reply) => {
     console.log('user selected imgur')
     reply({ text: 'Uploading to imgur...' })
     let element = {
-      title: 'Imgur',
       image_url: data.imgur || null,
       buttons: [{
         type: 'web_url',
