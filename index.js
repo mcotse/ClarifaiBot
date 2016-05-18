@@ -13,6 +13,10 @@ let bot = new Bot({
   token: FB_TOKEN,
   verify: FB_VERIFY
 })
+let data = {
+  imgur: '',
+  clarifai: ''
+}
 
 bot.on('error', (err) => {
   console.log(err.message)
@@ -20,31 +24,32 @@ bot.on('error', (err) => {
 
 bot.on('message', (payload, reply) => {
   console.log('Received message from ' + payload.sender.id)
-  if (!payload.message.attachments || !payload.message.attachments[0] || payload.message.attachments[0].type !== 'image') {
-    return reply({
-      text: 'That\'s not an iamge. Send me an image!'
-    })
-  }
+  // if (payload.message.attachments && payload.message.attachments[0] && payload.message.attachments[0].type == 'image') {
+    //console.log('received img')
+    recognizeImage({
+      message: payload.message
+    }, (err, img) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+      if (err) throw err
 
-  reply({ text: 'Analyzing image... this might take a few seconds.' })
-  recognizeImage({
-    message: payload.message
-  }, (err, song) => {
-    if (err) {
-      return reply({
-        text: 'I couldn\'t identify the image with Clarifai.'
-      })
-    }
-    if (err) throw err
+      data.clarifai = img.id
+      data.imgur = img.imgur_url
+    })
+
 
     let element = {
-      title: 'Identify',
-      subtitle: song.id,
-      image_url: song.imgur_url || null,
+      title: 'Send it to...',
       buttons: [{
-        type: 'web_url',
-        title: 'imgur link',
-        url: song.imgur_url
+        type: 'postback',
+        title: 'Imgur',
+        payload: 'imgur'
+      },{
+        type: 'postback',
+        title: 'Clarifai',
+        payload: 'clarifai'
       }]
     }
 
@@ -57,7 +62,42 @@ bot.on('message', (payload, reply) => {
         }
       }
     })
-  })
+  // }
+
+})
+
+bot.on('postback',(fullpayload,reply) => {
+  let payload = fullpayload.postback.payload
+  console.log(payload)
+  if (payload =='clarifai'){
+    console.log('user selected clarifai')
+
+    reply({ text: 'This is a ' + data.clarifai})
+  }
+  if (payload =='imgur'){
+    console.log('user selected imgur')
+    reply({ text: 'Uploading to imgur...' })
+    let element = {
+      title: 'Imgur',
+      image_url: data.imgur || null,
+      buttons: [{
+        type: 'web_url',
+        title: 'Imgur link',
+        url: data.imgur
+      }]
+    }
+
+    reply({
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'generic',
+          elements: [element]
+        }
+      }
+    })
+  }
+
 })
 
 http.createServer(bot.middleware()).listen(process.env.PORT || 3000, () => console.log('Server running on http://localhost:3000'))

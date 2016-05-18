@@ -20,6 +20,7 @@ module.exports = function recognizeImage (opts, cb) {
   let { url } = attachment.payload
   console.log(url)
 
+  //upload to imgur
   imgur.uploadUrl(url)
   .then(json => {
       let { link } = json.data
