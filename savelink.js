@@ -4,4 +4,8 @@ const request = require('request')
 const config = require('./config')
 var firebase = require('firebase');
 
-firebase.initializeApp(config.firebase_config);
+var app = firebase.initializeApp(config.firebase_config);
+
+var createNewLink(uid, link) => {
+  
+}
