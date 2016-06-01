@@ -24,8 +24,8 @@ bot.on('error', (err) => {
 
 bot.on('message', (payload, reply) => {
   console.log('Received message from ' + payload.sender.id)
-  // if (payload.message.attachments && payload.message.attachments[0] && payload.message.attachments[0].type == 'image') {
-    //console.log('received img')
+  if (payload.message.attachments && payload.message.attachments[0] && payload.message.attachments[0].type == 'image') {
+    console.log('received img')
     recognizeImage({
       message: payload.message
     }, (err, img) => {
@@ -62,7 +62,7 @@ bot.on('message', (payload, reply) => {
         }
       }
     })
-  // }
+  }
 
 })
 
