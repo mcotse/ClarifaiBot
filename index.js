@@ -63,7 +63,7 @@ bot.on('message', (payload, reply) => {
             }
         })
     } else {
-        reply({ text: 'That\'s not a message that i could understand, try again with an image!'})
+        reply({ text: 'That\'s not a message that I can understand, try again with an image!'})
     }
 
 })
