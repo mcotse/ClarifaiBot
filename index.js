@@ -72,29 +72,34 @@ bot.on('postback',(fullpayload,reply) => {
   if (payload =='clarifai'){
     console.log('user selected clarifai')
 
-    reply({ text: 'This is a ' + data.clarifai})
+    setTimeout(()=>{
+        reply({ text: 'This is a ' + data.clarifai})
+    },1500)
   }
   if (payload =='imgur'){
     console.log('user selected imgur')
     reply({ text: 'Uploading to imgur...' })
     let element = {
-      image_url: data.imgur || null,
+        title: 'Uploaded to Imgur!',
+      image_url: data.imgur,
       buttons: [{
         type: 'web_url',
         title: 'Imgur link',
         url: data.imgur
       }]
     }
+    setTimeout(()=>{
+        reply({
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'generic',
+              elements: [element]
+            }
+          }
+        })
+    },1500)
 
-    reply({
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'generic',
-          elements: [element]
-        }
-      }
-    })
   }
 
 })
