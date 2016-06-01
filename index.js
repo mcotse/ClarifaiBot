@@ -10,99 +10,99 @@ const FB_TOKEN = 'CAALZCGZCD9zn4BACBDgLoE7NVYboCMqpQf6o9a3ZCPDOZCI7RZBZB0vePZCua
 const FB_VERIFY = 'Verify123'
 
 let bot = new Bot({
-  token: FB_TOKEN,
-  verify: FB_VERIFY
+    token: FB_TOKEN,
+    verify: FB_VERIFY
 })
 let data = {
-  imgur: '',
-  clarifai: ''
+    imgur: '',
+    clarifai: ''
 }
 
 bot.on('error', (err) => {
-  console.log(err.message)
+    console.log(err.message)
 })
 
 bot.on('message', (payload, reply) => {
-  console.log('Received message from ' + payload.sender.id)
-  if (payload.message.attachments && payload.message.attachments[0] && payload.message.attachments[0].type == 'image') {
-    console.log('received img')
-    recognizeImage({
-      message: payload.message
-    }, (err, img) => {
-      if (err) {
-        console.log(err)
-        return
-      }
-      if (err) throw err
+    console.log('Received message from ' + payload.sender.id)
+    if (payload.message.attachments && payload.message.attachments[0] && payload.message.attachments[0].type == 'image') {
+        console.log('received img')
+        recognizeImage({
+            message: payload.message
+        }, (err, img) => {
+            if (err) {
+                console.log(err)
+                return
+            }
+            if (err) throw err
 
-      data.clarifai = img.id
-      data.imgur = img.imgur_url
-    })
+            data.clarifai = img.id
+            data.imgur = img.imgur_url
+        })
 
 
-    let element = {
-      title: 'Send it to...',
-      buttons: [{
-        type: 'postback',
-        title: 'Imgur',
-        payload: 'imgur'
-      },{
-        type: 'postback',
-        title: 'Clarifai',
-        payload: 'clarifai'
-      }]
-    }
-
-    reply({
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'generic',
-          elements: [element]
+        let element = {
+            title: 'Send it to...',
+            buttons: [{
+                type: 'postback',
+                title: 'Imgur',
+                payload: 'imgur'
+            },{
+                type: 'postback',
+                title: 'Clarifai',
+                payload: 'clarifai'
+            }]
         }
-      }
-    })
-} else {
-    reply({ text: 'That\'s not a message that i could understand, try again with an image!'})
-}
+
+        reply({
+            attachment: {
+                type: 'template',
+                payload: {
+                    template_type: 'generic',
+                    elements: [element]
+                }
+            }
+        })
+    } else {
+        reply({ text: 'That\'s not a message that i could understand, try again with an image!'})
+    }
 
 })
 
 bot.on('postback',(fullpayload,reply) => {
-  let payload = fullpayload.postback.payload
-  console.log(payload)
-  if (payload =='clarifai'){
-    console.log('user selected clarifai')
+    let payload = fullpayload.postback.payload
+    console.log(payload)
+    if (payload =='clarifai'){
+        console.log('user selected clarifai')
 
-    setTimeout(()=>{
-        reply({ text: 'This is a ' + data.clarifai})
-    },1500)
-  }
-  if (payload =='imgur'){
-    console.log('user selected imgur')
-    reply({ text: 'Uploading to imgur...' })
-    let element = {
-        title: 'Uploaded to Imgur!',
-      image_url: data.imgur,
-      buttons: [{
-        type: 'web_url',
-        title: 'Imgur link',
-        url: data.imgur
-      }]
+        setTimeout(()=>{
+            reply({ text: 'This is a ' + data.clarifai})
+        },1500)
     }
-    setTimeout(()=>{
-        reply({
-          attachment: {
-            type: 'template',
-            payload: {
-              template_type: 'generic',
-              elements: [element]
-            }
-          }
-        })
-    },1500)
+    if (payload =='imgur'){
+        console.log('user selected imgur')
+        reply({ text: 'Uploading to imgur...' })
+        let element = {
+            title: 'Uploaded to Imgur!',
+            image_url: data.imgur,
+            buttons: [{
+                type: 'web_url',
+                title: 'Imgur link',
+                url: data.imgur
+            }]
+        }
+        setTimeout(()=>{
+            reply({
+                attachment: {
+                    type: 'template',
+                    payload: {
+                        template_type: 'generic',
+                        elements: [element]
+                    }
+                }
+            })
+        },1500)
 
-  }
+    }
 
 })
 
